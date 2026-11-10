@@ -19,3 +19,18 @@ configMapGenerator:
     literals:
       - OPTION_A=Cats
       - OPTION_B=Dogs
+
+patches:
+  - patch: |-
+      - op: add
+        path: /metadata/annotations
+        value: {"argocd.argoproj.io/sync-wave": "1"}
+    target:
+      kind: Deployment
+      name: (vote|result|worker)
+  - patch: |-
+      - op: add
+        path: /metadata/annotations
+        value: {"argocd.argoproj.io/sync-wave": "2"}
+    target:
+      kind: Ingress
